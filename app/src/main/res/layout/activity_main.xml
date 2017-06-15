@@ -7,6 +7,78 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.lucas.lucas.tamagochi.MainActivity">
+    tools:context="com.lucas.lucas.tamagochi.MainActivity"
+    android:weightSum="1"
+    android:background="@color/colorPrimary">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="false"
+        android:gravity="center_vertical|center"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="comida"
+            android:id="@+id/btnFood"
+            android:padding="30dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="0.29"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vida"
+            android:id="@+id/btnLife"
+            android:padding="30dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="0.35" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/nameTamagochi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/foodDisplay"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/linearLayout"
+        android:layout_toLeftOf="@+id/nameTamagochi"
+        android:layout_toStartOf="@+id/nameTamagochi"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0"
+        android:id="@+id/lifeDisplay"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp"
+        android:textColor="#ffffff"
+        android:layout_alignBaseline="@+id/foodDisplay"
+        android:layout_alignBottom="@+id/foodDisplay"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

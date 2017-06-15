@@ -6,24 +6,27 @@ package com.lucas.lucas.tamagochi.Tamagochi;
 public class Tamagochi
 {
     private static Tamagochi instance;
-    private String name;
+    private static String name;
     private int food;
     private int life;
+    private boolean isDead = true;
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
 
 
     public static Tamagochi getInstance()
     {
         if (instance == null)
         {
-            //instance = new Tamagochi();
+            instance = new Tamagochi();
         }
         return instance;
-    }
-    public Tamagochi(String name, int food, int life)
-    {
-        this.name = name;
-        this.food = food;
-        this.life = life;
     }
 
     public String getName()
@@ -39,5 +42,17 @@ public class Tamagochi
     public int getLife()
     {
         return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public void setName(String name) {
+        Tamagochi.name = name;
     }
 }
