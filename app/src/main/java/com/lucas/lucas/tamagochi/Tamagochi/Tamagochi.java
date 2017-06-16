@@ -9,16 +9,6 @@ public class Tamagochi
     private static String name;
     private int food;
     private int life;
-    private boolean isDead = true;
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public void setDead(boolean dead) {
-        isDead = dead;
-    }
-
 
     public static Tamagochi getInstance()
     {

@@ -23,27 +23,27 @@
         android:id="@+id/linearLayout">
 
         <Button
+            android:id="@+id/btnFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="comida"
-            android:id="@+id/btnFood"
-            android:padding="30dp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimaryDark"
+            android:layout_marginRight="10dp"
             android:layout_weight="0.29"
-            android:layout_marginRight="10dp" />
+            android:background="@color/colorPrimaryDark"
+            android:padding="30dp"
+            android:text="food"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btnLife"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="vida"
-            android:id="@+id/btnLife"
-            android:padding="30dp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
+            android:layout_weight="0.35"
             android:background="@color/colorPrimaryDark"
-            android:layout_weight="0.35" />
+            android:padding="30dp"
+            android:text="life"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
@@ -63,11 +63,10 @@
         android:text="0"
         android:id="@+id/foodDisplay"
         android:textColor="#ffffff"
+        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp"
         android:layout_above="@+id/linearLayout"
-        android:layout_toLeftOf="@+id/nameTamagochi"
-        android:layout_toStartOf="@+id/nameTamagochi"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp" />
+        android:layout_toLeftOf="@+id/nameTamagochi" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,10 +74,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="0"
         android:id="@+id/lifeDisplay"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp"
         android:textColor="#ffffff"
-        android:layout_alignBaseline="@+id/foodDisplay"
-        android:layout_alignBottom="@+id/foodDisplay"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/linearLayout"
+        android:layout_toRightOf="@+id/nameTamagochi"
+        android:layout_toEndOf="@+id/nameTamagochi"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp" />
+
 </RelativeLayout>
