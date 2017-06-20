@@ -5,6 +5,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.lucas.lucas.tamagochi.Helper.Notifications;
 import com.lucas.lucas.tamagochi.Preferences.Preferences;
 
 /**
@@ -14,6 +16,7 @@ public class Service extends android.app.Service implements Runnable, CountListe
     private boolean active;
 
     private Preferences preferences;
+    private Notifications notifications;
     private final LocalBinder connection = new LocalBinder();
     private int life;
 
@@ -36,12 +39,15 @@ public class Service extends android.app.Service implements Runnable, CountListe
         active = true;
         preferences = new Preferences(this);
         life = preferences.getLifePreferences();
+        notifications = new Notifications(getApplicationContext());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -53,11 +59,14 @@ public class Service extends android.app.Service implements Runnable, CountListe
     @Override
     public void run(){
         while(active){
+           //life = preferences.getLifePreferences();
             if(life > 0 ){
+                life = preferences.getLifePreferences();
                 life--;
                 Log.d("coaaaaaaaaunt", Integer.toString(life));
                 preferences.setLifePreferences(life);
                 setInterval();
+                notifications.lifeNotifications(life);
             }
         }
     }

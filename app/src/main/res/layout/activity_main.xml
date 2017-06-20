@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,14 +48,15 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/nameTamagochi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/nameTamagochi"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
-        android:textColor="#ffffff" />
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,5 +82,13 @@
         android:layout_toEndOf="@+id/nameTamagochi"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp" />
+
+    <ImageView
+        android:id="@+id/imageView_dog"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/dog"
+        android:layout_below="@+id/nameTamagochi"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

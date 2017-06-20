@@ -16,9 +16,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lucas.lucas.tamagochi.Helper.Notifications;
 import com.lucas.lucas.tamagochi.Preferences.Preferences;
 import com.lucas.lucas.tamagochi.Services.CountListener;
 import com.lucas.lucas.tamagochi.Services.Service;
@@ -26,11 +28,14 @@ import com.lucas.lucas.tamagochi.Tamagochi.Tamagochi;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection
 {
+    //pegar o valor do count da interface e utilizar na hora de atualizar os valores da interface e passar para
+    //memoria do dispositvo ao inves de ficar acessando toda hora o sharedpreferences
     private CountListener countListener;
     private final ServiceConnection connection = this;
 
     private Tamagochi tamagochi;
     private Preferences preferences;
+    private Notifications notifications;
 
 
     private String name;
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     private TextView nameTmagochi;
     private TextView lifeDisplay;
     private TextView foodDisplay;
+    private ImageView imageViewDog;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -54,9 +60,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         nameTmagochi = (TextView)findViewById(R.id.nameTamagochi);
         lifeDisplay = (TextView)findViewById(R.id.lifeDisplay);
         foodDisplay = (TextView)findViewById(R.id.foodDisplay);
+        imageViewDog = (ImageView)findViewById(R.id.imageView_dog);
 
         tamagochi = Tamagochi.getInstance();
         preferences = new Preferences(getApplicationContext());
+        notifications = new Notifications(getApplicationContext());
 
         name = preferences.getNamePreferences();
 
@@ -68,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         }else{
             Intent intent = new Intent(getApplicationContext(),Service.class);
             startService(intent);
-            bindService(intent,connection, 0);
+//            bindService(intent,connection, 0);
         }
 
         if(name == null){
@@ -85,10 +93,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         lifeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tamagochi.getLife() < 100){
-                    tamagochi.setLife(tamagochi.getLife() + 10);
-                    preferences.setLifePreferences(tamagochi.getLife());
-                    updateValues();
+                if(preferences.getLifePreferences() < 100){
+                    int life = preferences.getLifePreferences();
+                    life += 10;
+                    preferences.setLifePreferences(life);
+                    //updateValues();
                 }
             }
         });
@@ -106,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     }
 
     private void updateValues(){
-        lifeDisplay.setText(Integer.toString(tamagochi.getLife()));
-        foodDisplay.setText(Integer.toString(tamagochi.getFood()));
+        lifeDisplay.setText(Integer.toString(preferences.getLifePreferences()));
+        foodDisplay.setText(Integer.toString(preferences.getFoodPreferences()));
     }
 
     private void alertMessageNewUser(){
@@ -165,10 +174,33 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         countListener = binder.getService();
     }
 
+    /*
+    @Override
+    protected void onStop() {
+        super.onStop();
+        UnbindConnection();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UnbindConnection();
+    }*/
+
     @Override
     public void onServiceDisconnected(ComponentName componentName) {
         Log.d("BIND SERVICE SAMPLE", "SERVICE DISCONNECTED");
-        countListener = null;
+        //countListener = null;
+    }
+
+    private void UnbindConnection()
+    {
+        if(countListener != null)
+        {
+            Log.d("BIND SERVICE SAMPLE", "STOP BIND SERVICE");
+            countListener = null;
+            unbindService(connection);
+        } else Log.d("BIND SERVICE SAMPLE", "THE SERVICE ISN'T CONNECTED");
     }
 
     public void setThread(){
@@ -177,13 +209,18 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             public void run() {
                 super.run();
                 while (!isInterrupted()){
+                    if(preferences.getLifePreferences() == 0){
+                        imageViewDog.setImageResource(R.drawable.dogdead);
+                    }
+                    else if(preferences.getLifePreferences() > 0){
+                        imageViewDog.setImageResource(R.drawable.dog);
+                    }
                     try {
                         Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                int count = countListener.getCount();
-                                lifeDisplay.setText(Integer.toString(count));
+                                lifeDisplay.setText(Integer.toString(preferences.getLifePreferences()));
                             }
                         });
                     } catch (InterruptedException e) {
