@@ -26,19 +26,19 @@ public class Notifications{
                 notificationBuilder("Your Tamagochi needs food", "Goooo!!! I'm so hungry!!!" );
                 break;
             case 25:
-                //notificationBuilder("Your Tamagochi needs food",);
+                notificationBuilder("Your Tamagochi needs food","Goooo!!! I'm so hungry!!!");
                 break;
             case 35:
-                //notificationBuilder("Your Tamagochi needs food",);
+                notificationBuilder("Your Tamagochi needs food","Goooo!!! I'm so hungry!!!");
                 break;
             case 50:
-                //notificationBuilder("Your Tamagochi needs food",);
+                notificationBuilder("Your Tamagochi needs food","Goooo!!! I'm so hungry!!!");
                 break;
             case 70:
-                //notificationBuilder("Your Tamagochi needs food",);
+                notificationBuilder("Your Tamagochi needs food","Goooo!!! I'm so hungry!!!");
                 break;
             case 85:
-                //notificationBuilder("Your Tamagochi needs food",);
+                notificationBuilder("Your Tamagochi needs food","Goooo!!! I'm so hungry!!!");
                 break;
         }
     }

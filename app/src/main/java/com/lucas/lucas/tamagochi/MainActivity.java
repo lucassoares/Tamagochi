@@ -28,8 +28,6 @@ import com.lucas.lucas.tamagochi.Tamagochi.Tamagochi;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection
 {
-    //pegar o valor do count da interface e utilizar na hora de atualizar os valores da interface e passar para
-    //memoria do dispositvo ao inves de ficar acessando toda hora o sharedpreferences
     private CountListener countListener;
     private final ServiceConnection connection = this;
 
@@ -72,13 +70,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             Intent intent = new Intent(getApplicationContext(),Service.class);
             bindService(intent,connection, Context.BIND_AUTO_CREATE);
             startService(intent);
-            Log.d("service","running");
-        }else{
-            Intent intent = new Intent(getApplicationContext(),Service.class);
-            startService(intent);
-//            bindService(intent,connection, 0);
         }
-
         if(name == null){
             alertMessageNewUser();
         }
@@ -105,10 +97,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         foodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tamagochi.getFood() < 100){
-                    tamagochi.setFood(tamagochi.getFood() + 10);
-                    preferences.setFoodPreferences(tamagochi.getFood());
-                    updateValues();
+                if(preferences.getFoodPreferences() < 100){
+                    int food = preferences.getFoodPreferences();
+                    food += 10;
+                    preferences.setFoodPreferences(food);
+                    //updateValues();
                 }
             }
         });
@@ -120,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     }
 
     private void alertMessageNewUser(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog alert;
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
         final EditText inputUserName = new EditText(MainActivity.this);
 
         inputUserName.setPadding(16,16,16,16);
@@ -135,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             public void onClick(DialogInterface dialogInterface, int i) {
                 String userName = inputUserName.getText().toString();
                 createUser(userName);
+                Intent intent = new Intent(getApplicationContext(),Service.class);
+                startService(intent);
                 Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
             }
         });
@@ -146,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             }
         });
 
-        alertDialog.show();
+        alert = alertDialog.create();
+        alert.show();
     }
 
     private void createUser(String userName){
@@ -174,19 +171,6 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         countListener = binder.getService();
     }
 
-    /*
-    @Override
-    protected void onStop() {
-        super.onStop();
-        UnbindConnection();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        UnbindConnection();
-    }*/
-
     @Override
     public void onServiceDisconnected(ComponentName componentName) {
         Log.d("BIND SERVICE SAMPLE", "SERVICE DISCONNECTED");
@@ -209,10 +193,10 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             public void run() {
                 super.run();
                 while (!isInterrupted()){
-                    if(preferences.getLifePreferences() == 0){
+                    if(preferences.getLifePreferences() == 0 || preferences.getFoodPreferences() == 0){
                         imageViewDog.setImageResource(R.drawable.dogdead);
                     }
-                    else if(preferences.getLifePreferences() > 0){
+                    else if(preferences.getLifePreferences() > 0 || preferences.getFoodPreferences() > 0){
                         imageViewDog.setImageResource(R.drawable.dog);
                     }
                     try {
@@ -221,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                             @Override
                             public void run() {
                                 lifeDisplay.setText(Integer.toString(preferences.getLifePreferences()));
+                                foodDisplay.setText(Integer.toString(preferences.getFoodPreferences()));
                             }
                         });
                     } catch (InterruptedException e) {

@@ -19,6 +19,7 @@ public class Service extends android.app.Service implements Runnable, CountListe
     private Notifications notifications;
     private final LocalBinder connection = new LocalBinder();
     private int life;
+    private int food;
 
     public class LocalBinder extends Binder
     {
@@ -39,6 +40,7 @@ public class Service extends android.app.Service implements Runnable, CountListe
         active = true;
         preferences = new Preferences(this);
         life = preferences.getLifePreferences();
+        food = preferences.getFoodPreferences();
         notifications = new Notifications(getApplicationContext());
     }
 
@@ -67,6 +69,13 @@ public class Service extends android.app.Service implements Runnable, CountListe
                 preferences.setLifePreferences(life);
                 setInterval();
                 notifications.lifeNotifications(life);
+            }
+            if(food > 0){
+                food = preferences.getFoodPreferences();
+                food--;
+                preferences.setFoodPreferences(food);
+                setInterval();
+                notifications.foodNotifications(food);
             }
         }
     }

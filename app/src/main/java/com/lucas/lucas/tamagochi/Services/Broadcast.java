@@ -17,6 +17,7 @@ public class Broadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context,"BROADCAST",Toast.LENGTH_SHORT).show();
+
         if(!isMyServiceRunning(context,Service.class)){
             i = new Intent(context, Service.class);
             context.startService(i);
